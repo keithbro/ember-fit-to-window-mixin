@@ -1,6 +1,6 @@
 # ember-fit-to-window-mixin
 
-Maintains the Ember.Component heights so that they fit vertically in the
+Maintains Ember.Component heights so that they fit vertically in the
 viewport.
 
 ## Usage
