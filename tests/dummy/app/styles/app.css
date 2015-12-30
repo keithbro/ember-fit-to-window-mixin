@@ -1,0 +1,12 @@
+.main-content {
+  border: 1px solid blue;
+  float: left;
+  width: 70%;
+}
+
+.side-bar {
+  border: 1px solid red;
+  float: left;
+  margin-right: 5%;
+  width: 20%;
+}
