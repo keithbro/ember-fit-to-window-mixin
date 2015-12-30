@@ -1,6 +1,31 @@
-# Ember-fit-to-window-mixin
+# ember-fit-to-window-mixin
 
-This README outlines the details of collaborating on this Ember addon.
+Maintains the Ember.Component heights so that they fit vertically in the
+viewport.
+
+## Usage
+
+`ember install ember-fit-to-window`
+
+Elements that take up vertical space either above or below should have the
+class `ignore` so that the mixin ignores them in the calculation.
+
+### Basic Example
+
+#### Component
+
+    import Ember from 'ember';
+    import FitToWindow from 'ember-fit-to-window-mixin/mixins/fit-to-window';
+
+    export default Ember.Component.extend(FitToWindow)
+
+#### Template
+
+    <div class="header ignore">...</div>
+
+    {{your-component}}
+
+    <div class="footer ignore">...</div>
 
 ## Installation
 
