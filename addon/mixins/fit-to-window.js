@@ -19,12 +19,12 @@ export default Ember.Mixin.create({
     this._super();
 
     this.setHeight();
-    this.$(window).on('resize', this.setHeight.bind(this));
+    this.$(window).on('resize', () => this.setHeight());
   },
 
   willDestroy() {
     this._super();
 
-    this.$(window).off('resize', this.setHeight.bind(this));
+    this.$(window).off('resize', () => this.setHeight());
   },
 });
