@@ -21,7 +21,10 @@ class `ignore` so that the mixin ignores them in the calculation.
 import Ember from 'ember';
 import FitToWindow from 'ember-fit-to-window-mixin/mixins/fit-to-window';
 
-export default Ember.Component.extend(FitToWindow)
+export default Ember.Component.extend(FitToWindow, {
+  // optionally, you can specify the selector of the fixed-height DOM elements
+  fixedHeightSelector: '.whatever-you-like',
+});
 ```
 
 #### Template
