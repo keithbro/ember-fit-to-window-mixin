@@ -10,7 +10,7 @@ test('component lifecycle', function(assert) {
   let detachedResizeHandler = false;
 
   const component = Ember.Component.extend(FitToWindowMixin).create({
-    ignoreHeight: 100,
+    fixedHeight: 100,
 
     $(selector) {
       return {

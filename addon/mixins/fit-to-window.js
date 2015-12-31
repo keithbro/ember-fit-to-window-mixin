@@ -5,20 +5,24 @@ import Ember from 'ember';
  * viewport.
  */
 export default Ember.Mixin.create({
+  fixedHeightSelector: '.ignore',
+
   /**
    * Sums the heights of the DOM elements that will appear either above or
    * below.
    *
-   * @property ignoreHeight
+   * @property fixedHeight
    * @type Integer
    */
-  ignoreHeight: Ember.computed(
+  fixedHeight: Ember.computed(
     function() {
-      let ignoreHeight = 0;
-      this.$().closest('html').find('.ignore').each((i, el) => {
-        ignoreHeight += this.$(el).outerHeight(true);
+      const selector = this.get('fixedHeightSelector');
+
+      let fixedHeight = 0;
+      this.$().closest('html').find(selector).each((i, el) => {
+        fixedHeight += this.$(el).outerHeight(true);
       });
-      return ignoreHeight;
+      return fixedHeight;
     }
   ),
 
@@ -29,7 +33,7 @@ export default Ember.Mixin.create({
    * @method setHeight
    */
   setHeight() {
-    this.$().outerHeight(this.$(window).height() - this.get('ignoreHeight'));
+    this.$().outerHeight(this.$(window).height() - this.get('fixedHeight'));
   },
 
   /**
