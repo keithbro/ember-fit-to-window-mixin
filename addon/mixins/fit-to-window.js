@@ -47,18 +47,21 @@ export default Ember.Mixin.create({
     this._super();
 
     this.setHeight();
-    this.$(window).on('resize', () => this.setHeight());
+
+    const elementID = this.get('elementId');
+    this.$(window).on(`resize.${elementID}`, () => this.setHeight());
   },
 
   /**
    * Called when the component is about to be destroyed. Cleans up by removing
    * the window resize listener.
    *
-   * @method willDestroy
+   * @method willDestroyElement
    */
-  willDestroy() {
-    this._super();
+  willDestroyElement() {
+    const elementID = this.get('elementId');
+    this.$(window).off(`resize.${elementID}`);
 
-    this.$(window).off('resize', () => this.setHeight());
+    this._super();
   },
 });

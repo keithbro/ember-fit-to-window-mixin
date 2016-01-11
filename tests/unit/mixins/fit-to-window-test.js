@@ -6,8 +6,7 @@ module('Unit | Mixin | fit to window');
 
 test('component lifecycle', function(assert) {
   let newOuterHeight;
-  let attachedResizeHandler = false;
-  let detachedResizeHandler = false;
+  let eventHandlers = Ember.A();
 
   const component = Ember.Component.extend(FitToWindowMixin).create({
     fixedHeight: 100,
@@ -22,12 +21,16 @@ test('component lifecycle', function(assert) {
           if (selector === undefined) { newOuterHeight = _newOuterHeight; }
         },
 
-        on(event, func) {
-          if (event === 'resize') { attachedResizeHandler = func; }
+        on(eventName, func) {
+          eventHandlers.addObject({ eventName, func });
         },
 
-        off(event, func) {
-          if (event === 'resize') { detachedResizeHandler = func; }
+        off(eventName) {
+          const eventHandler = eventHandlers.findBy('eventName', eventName);
+          assert.ok(
+            eventHandler, `found event handler to detach (${eventName})`
+          );
+          eventHandlers = eventHandlers.without(eventHandler);
         },
       };
     },
@@ -37,8 +40,7 @@ test('component lifecycle', function(assert) {
     newOuterHeight, undefined,
     "component's outerHeight not yet set"
   );
-  assert.notOk(attachedResizeHandler, "resize handler not yet attached");
-  assert.notOk(detachedResizeHandler, "resize handler not yet detached");
+  assert.deepEqual(eventHandlers, [], 'no event handlers attached yet');
 
   component.didRender();
 
@@ -46,10 +48,16 @@ test('component lifecycle', function(assert) {
     newOuterHeight, 400,
     "component's outerHeight has been set"
   );
-  assert.ok(attachedResizeHandler, "resize handler has been attached");
-  assert.notOk(detachedResizeHandler, "resize handler not yet detached");
+  assert.strictEqual(
+    eventHandlers.length, 1, 'one event handler was attached'
+  );
+  assert.ok(
+    eventHandlers[0].eventName.match(/^resize\.ember\d+$/),
+    'a namespaced resize handler was attached'
+  );
 
-  component.willDestroy();
-
-  assert.ok(detachedResizeHandler, "resize handler has been detached");
+  component.willDestroyElement();
+  assert.strictEqual(
+    eventHandlers.length, 0, 'the resize event handler was detached'
+  );
 });
