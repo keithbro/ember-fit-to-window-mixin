@@ -1,6 +1,6 @@
 {
   "name": "ember-fit-to-window-mixin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Sets the height of components to fit the viewport.",
   "directories": {
     "doc": "doc",
